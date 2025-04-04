@@ -645,7 +645,7 @@ where
     }
 }
 
-impl ForkserverExecutor<I, (), (), UnixShMem, ()>
+impl<I> ForkserverExecutor<I, (), (), UnixShMem, ()>
 where
     I: Input
 {
@@ -1464,7 +1464,10 @@ where
     }
 }
 
-impl<'a> ForkserverExecutorBuilder<'a, NopTargetBytesConverter<BytesInput>, UnixShMemProvider> {
+impl<'a, I> ForkserverExecutorBuilder<'a, NopTargetBytesConverter<I>, UnixShMemProvider>
+where 
+    I: Input
+{
     /// Creates a new `AFL`-style [`ForkserverExecutor`] with the given target, arguments and observers.
     /// This is the builder for `ForkserverExecutor`
     /// This Forkserver will attempt to provide inputs over shared mem when `shmem_provider` is given.
@@ -1473,7 +1476,7 @@ impl<'a> ForkserverExecutorBuilder<'a, NopTargetBytesConverter<BytesInput>, Unix
     /// If `debug_child` is set, the child will print to `stdout`/`stderr`.
     #[must_use]
     pub fn new(
-    ) -> ForkserverExecutorBuilder<'a, NopTargetBytesConverter<BytesInput>, UnixShMemProvider> {
+    ) -> ForkserverExecutorBuilder<'a, NopTargetBytesConverter<I>, UnixShMemProvider> {
         ForkserverExecutorBuilder {
             program: None,
             arguments: vec![],
