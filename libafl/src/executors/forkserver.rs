@@ -645,11 +645,14 @@ where
     }
 }
 
-impl ForkserverExecutor<(), (), (), UnixShMem, ()> {
+impl ForkserverExecutor<I, (), (), UnixShMem, ()>
+where
+    I: Input
+{
     /// Builder for `ForkserverExecutor`
     #[must_use]
     pub fn builder(
-    ) -> ForkserverExecutorBuilder<'static, NopTargetBytesConverter<BytesInput>, UnixShMemProvider>
+    ) -> ForkserverExecutorBuilder<'static, NopTargetBytesConverter<I>, UnixShMemProvider>
     {
         ForkserverExecutorBuilder::new()
     }
